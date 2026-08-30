@@ -77,3 +77,8 @@ BOARD_CUSTOM_BOOTIMG_MK :=  device/samsung/a2corelte/bootimg.mk
 
 # SELinux Policies
 BOARD_SEPOLICY_DIRS := device/samsung/a2corelte/sepolicy
+
+#size
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 33554432
+BOARD_FLASH_BLOCK_SIZE := 131072
+
