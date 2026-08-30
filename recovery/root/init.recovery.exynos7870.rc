@@ -2,15 +2,41 @@ on init
     write /proc/sys/kernel/hung_task_timeout_secs 0
 
 on boot
-    # Input/touch
     chmod 0660 /dev/input/event*
     chown system system /dev/input/event*
-
-    # Graphics / display
     chmod 0666 /dev/graphics/fb0
 
-    # Keymaster / Gatekeeper for decryption
     start servicemanager
     start hwservicemanager
     start keymaster-3-0
     start gatekeeper-1-0
+
+on post-fs-data
+    mkdir /efs/DAK 0775 system system
+    restorecon -R /efs/DAK
+
+service servicemanager /system/bin/servicemanager
+    class core
+    user system
+    group system
+    critical
+    seclabel u:r:recovery:s0
+
+service hwservicemanager /system/bin/hwservicemanager
+    class early_hal
+    user system
+    group system
+    critical
+    seclabel u:r:recovery:s0
+
+service keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service
+    class early_hal
+    user system
+    group system drmrpc
+    seclabel u:r:recovery:s0
+
+service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    class early_hal
+    user system
+    group system
+    seclabel u:r:recovery:s0
