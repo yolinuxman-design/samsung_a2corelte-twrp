@@ -8,8 +8,8 @@ $(call inherit-product, vendor/omni/config/common.mk)
 
 PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/prebuilt/kernel:kernel \
-     $(LOCAL_PATH)/prebuilt/dt.img:dt.img \
-     $(LOCAL_PATH)/prebuilt/dt.img:boot.img
+     $(LOCAL_PATH)/prebuilt/dt.img:dt.img 
+     # $(LOCAL_PATH)/prebuilt/dt.img:boot.img
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_NAME := omni_a2corelte
