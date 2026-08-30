@@ -1,5 +1,16 @@
-
 on init
     write /proc/sys/kernel/hung_task_timeout_secs 0
 
 on boot
+    # Input/touch
+    chmod 0660 /dev/input/event*
+    chown system system /dev/input/event*
+
+    # Graphics / display
+    chmod 0666 /dev/graphics/fb0
+
+    # Keymaster / Gatekeeper for decryption
+    start servicemanager
+    start hwservicemanager
+    start keymaster-3-0
+    start gatekeeper-1-0
