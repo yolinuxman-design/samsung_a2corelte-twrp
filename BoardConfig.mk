@@ -48,7 +48,7 @@ TARGET_COPY_OUT_VENDOR := vendor
 # Crypto
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_SAMSUNG := true
-TW_INCLUDE_FBE := true
+# TW_INCLUDE_FBE := true
 
 # TWRP specific build flags
 RECOVERY_VARIANT := twrp
