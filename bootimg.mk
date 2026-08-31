@@ -2,13 +2,16 @@ LOCAL_PATH := $(call my-dir)
 
 FLASH_IMAGE_TARGET ?= $(PRODUCT_OUT)/recovery.tar
 
-# Boot image rule (required by Pie build system as dependency)
-$(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES) $(BOARD_CUSTOM_BOOTIMG_MK)
+# Boot image rule
+$(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES)
 	@echo -e ${CL_GRN}"----- Making boot image ------"${CL_RST}
 	$(hide) $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --output $@
 	@echo -e ${CL_CYN}"Made boot image: $@"${CL_RST}
 
-$(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(INSTALLED_DTIMAGE_TARGET) $(recovery_kernel) $(recovery_ramdisk)
+# Recovery image rule — append dt to kernel first
+$(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(recovery_kernel) $(recovery_ramdisk)
+	@echo -e ${CL_GRN}"----- Appending dt to kernel ------"${CL_RST}
+	$(hide) cat $(LOCAL_PATH)/prebuilt/dt.img >> $(recovery_kernel)
 	@echo -e ${CL_GRN}"----- Making recovery image ------"${CL_RST}
 	$(hide) $(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --output $@ --ramdisk $(recovery_ramdisk)
 	@echo -e ${CL_CYN}"Made recovery image: $@"${CL_RST}
