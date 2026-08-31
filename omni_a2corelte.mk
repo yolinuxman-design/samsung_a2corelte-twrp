@@ -1,19 +1,18 @@
-LOCAL_PATH := device/samsung/a2corelte
+# Release name
+PRODUCT_RELEASE_NAME := a2corelte
 
-# Inherit from the common Open Source product configuration
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product, build/target/product/embedded.mk)
 
-# Inherit some common Lineage stuff.
+# Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
 
-PRODUCT_COPY_FILES += \
-     $(LOCAL_PATH)/prebuilt/kernel:kernel \
-     $(LOCAL_PATH)/prebuilt/dt.img:dt.img 
-     # $(LOCAL_PATH)/prebuilt/dt.img:boot.img
+PRODUCT_PACKAGES += \
+	charger_res_images \
+	charger
 
 ## Device identifier. This must come after all inclusions
-PRODUCT_NAME := omni_a2corelte
 PRODUCT_DEVICE := a2corelte
+PRODUCT_NAME := omni_a2corelte
+PRODUCT_MODEL := Galaxy A2 Core (2019)
 PRODUCT_BRAND := samsung
 PRODUCT_MANUFACTURER := samsung
-PRODUCT_MODEL := Samsung Galaxy A2Core
