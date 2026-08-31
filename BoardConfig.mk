@@ -94,5 +94,7 @@ TARGET_USES_LOGD := true
 # SELinux Policies
 BOARD_SEPOLICY_DIRS := device/samsung/a2corelte/sepolicy
 
+LZMA_RAMDISK_TARGETS := recovery
+
 
 
