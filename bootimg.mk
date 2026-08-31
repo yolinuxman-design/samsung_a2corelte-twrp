@@ -1,5 +1,3 @@
-LZMA_BIN := $(shell which lzma)
-
 FLASH_IMAGE_TARGET ?= $(PRODUCT_OUT)/recovery.tar
 
 ifdef TARGET_PREBUILT_DTB
@@ -8,15 +6,12 @@ endif
 
 $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) \
 		$(recovery_ramdisk) \
-		$(recovery_uncompressed_ramdisk) \
 		$(recovery_kernel)
-	@echo -e ${CL_CYN}"----- Compressing recovery ramdisk with lzma ------"${CL_RST}
-	rm -f $(recovery_uncompressed_ramdisk).lzma
-	$(LZMA_BIN) $(recovery_uncompressed_ramdisk)
-	$(hide) cp $(recovery_uncompressed_ramdisk).lzma $(recovery_ramdisk)
 	@echo ----- Making recovery image ------
 	$(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --output $@
 	@echo -e ${CL_CYN}"----- Made recovery image -------- $@"${CL_RST}
+	@echo -e ${CL_GRN}"----- Lying about SEAndroid state to Samsung bootloader ------"${CL_RST}
+	$(hide) printf "SEANDROIDENFORCE" >> $(INSTALLED_RECOVERYIMAGE_TARGET)
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_RECOVERYIMAGE_PARTITION_SIZE),raw)
 	$(hide) tar -C $(PRODUCT_OUT) -H ustar -c recovery.img > $(FLASH_IMAGE_TARGET)
 	@echo "------- Made flashable image: $(FLASH_IMAGE_TARGET) -------"
