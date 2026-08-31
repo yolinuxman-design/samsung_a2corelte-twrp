@@ -7,6 +7,10 @@ TARGET_CPU_VARIANT := cortex-a53
 TARGET_CPU_SMP := true
 
 
+BUILD_TEST_APPS := false
+BUILD_TEST_BENCHMARKS := false
+
+
 ALLOW_MISSING_DEPENDENCIES=true
 
 # Bootloader
