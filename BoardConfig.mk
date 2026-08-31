@@ -30,7 +30,8 @@ BOARD_KERNEL_CMDLINE := # Exynos doesn't take cmdline arguments from boot image
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
 # recovery kernel
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --board SRPSB21A012RU
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --board SRPSB21A012KU
+
 
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 0x002000000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x002600000
@@ -94,7 +95,7 @@ TARGET_USES_LOGD := true
 # SELinux Policies
 BOARD_SEPOLICY_DIRS := device/samsung/a2corelte/sepolicy
 
-LZMA_RAMDISK_TARGETS := recovery
+# LZMA_RAMDISK_TARGETS := recovery
 
 
 
