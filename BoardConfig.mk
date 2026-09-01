@@ -83,8 +83,9 @@ TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_SAMSUNG := true
 TARGET_HW_DISK_ENCRYPTION := true
-TW_INCLUDE_CRYPTO_FBE := false
+TW_INCLUDE_CRYPTO_FBE := true
 TARGET_KEYMASTER_WAIT_FOR_QSEE := true
+TW_INCLUDE_FBE := true
 
 # Samsung Exynos specific
 BOARD_USES_MULTIPLE_DTBO := false
@@ -95,7 +96,7 @@ TW_NO_REBOOT_BOOTLOADER := true
 TW_HAS_DOWNLOAD_MODE := true
 TW_INCLUDE_NTFS_3G := true
 
-# Required for Android 8.1 keystore
+# Required for Android 8.1 keystTW_INCLUDE_FBE := trueore
 TARGET_RECOVERY_DEVICE_MODULES += \
     android.hardware.keymaster@3.0-service \
     libkeymaster_messages
