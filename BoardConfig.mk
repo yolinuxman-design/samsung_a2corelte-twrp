@@ -26,7 +26,7 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
 
-BOARD_KERNEL_CMDLINE := # Exynos doesn't take cmdline arguments from boot image
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
 # recovery kernel
