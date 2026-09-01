@@ -115,7 +115,8 @@
 /dev/umts*                0660   system     radio
 /dev/umts_csd             0660   system     loop_radio
 /dev/smd4                 0660   system     radio
-/dev/umts_ciq*            0660   system     bridge_rw
+/dev/umts_ciq*            0660   system     radio
+
 
 # SIPC RIL
 /dev/umts_boot0           0660   radio      radio
