@@ -1,0 +1,16 @@
+# sepolicy/recovery.te
+type recovery, domain;
+type recovery_exec, exec_type, file_type;
+
+# Allow property sets
+set_prop(recovery, default_prop)
+set_prop(recovery, system_radio_prop)
+
+# Allow sysfs vibrator access
+allow recovery sysfs_vibrator:file { getattr open read write };
+
+# Allow tmpfs fifo operations
+allow recovery tmpfs:fifo_file { create read write unlink };
+
+# Allow rootfs fifo operations
+allow recovery rootfs:fifo_file unlink;
