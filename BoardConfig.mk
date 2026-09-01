@@ -82,7 +82,27 @@ TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 # Encryption support
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_SAMSUNG := true
-#TARGET_HW_DISK_ENCRYPTION := true
+TARGET_HW_DISK_ENCRYPTION := true
+TW_INCLUDE_CRYPTO_FBE := false
+TARGET_KEYMASTER_WAIT_FOR_QSEE := true
+
+# Samsung Exynos specific
+BOARD_USES_MULTIPLE_DTBO := false
+TARGET_USES_ION := true
+
+# TWRP specific for Samsung
+TW_NO_REBOOT_BOOTLOADER := true
+TW_HAS_DOWNLOAD_MODE := true
+TW_INCLUDE_NTFS_3G := true
+
+# Required for Android 8.1 keystore
+TARGET_RECOVERY_DEVICE_MODULES += \
+    android.hardware.keymaster@3.0-service \
+    libkeymaster_messages
+
+TW_RECOVERY_ADDITIONAL_RELINK_FILES += \
+    $(OUT)/vendor/bin/hw/android.hardware.keymaster@3.0-service
+
 
 # Additional Libraries
 #RECOVERY_LIBRARY_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libicui18n.so
