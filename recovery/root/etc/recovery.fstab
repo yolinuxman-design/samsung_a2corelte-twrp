@@ -12,4 +12,3 @@
 /dev/block/platform/13540000.dwmmc0/by-name/MISC	/misc		emmc	defaults		recoveryonly
 /dev/block/platform/13540000.dwmmc0/by-name/HIDDEN      /preload        ext4    defaults         	recoveryonly
 /dev/block/platform/13540000.dwmmc0/by-name/CPEFS	/cpefs		ext4	defaults		recoveryonly
-
