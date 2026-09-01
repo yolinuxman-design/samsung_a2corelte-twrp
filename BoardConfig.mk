@@ -133,5 +133,6 @@ BOARD_SEPOLICY_DIRS := device/samsung/a2corelte/sepolicy
 
 # LZMA_RAMDISK_TARGETS := recovery
 
+TARGET_RECOVERY_DEVICE_MODULES += servicemanager hwservicemanager
 
 
