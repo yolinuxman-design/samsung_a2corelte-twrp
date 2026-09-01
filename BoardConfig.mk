@@ -102,7 +102,7 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libkeymaster_messages
 
 TW_RECOVERY_ADDITIONAL_RELINK_FILES += \
-    $(OUT)/vendor/bin/hw/android.hardware.keymaster@3.0-service
+    device/samsung/a2corelte/recovery/root/vendor/bin/hw/android.hardware.keymaster@3.0-service
 
 
 # Additional Libraries
