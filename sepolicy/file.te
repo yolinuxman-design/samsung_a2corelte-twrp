@@ -1,0 +1,3 @@
+# sepolicy/file.te
+type metadata_block_device, dev_type;
+type userdata_block_device, dev_type;
