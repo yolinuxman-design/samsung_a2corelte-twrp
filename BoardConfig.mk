@@ -84,7 +84,6 @@ TW_INCLUDE_CRYPTO := true
 #TW_INCLUDE_CRYPTO_SAMSUNG := true
 #TARGET_HW_DISK_ENCRYPTION := true
 TW_INCLUDE_CRYPTO_FBE := true
-TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 TW_INCLUDE_FBE := true
 
 # Samsung Exynos specific
@@ -96,13 +95,29 @@ TW_NO_REBOOT_BOOTLOADER := true
 TW_HAS_DOWNLOAD_MODE := true
 TW_INCLUDE_NTFS_3G := true
 
-# Required for Android 8.1 keystTW_INCLUDE_FBE := trueore
+
+
+
+# Ensure these modules are pulled into the recovery ramdisk
 TARGET_RECOVERY_DEVICE_MODULES += \
     android.hardware.keymaster@3.0-service \
-    libkeymaster_messages
+    android.hardware.gatekeeper@1.0-service \
+    libkeymaster_messages \
+    libMcClient \
+    libuuid
 
+# Relink executables AND libraries into recovery
 TW_RECOVERY_ADDITIONAL_RELINK_FILES += \
-    device/samsung/a2corelte/recovery/root/vendor/bin/hw/android.hardware.keymaster@3.0-service
+    device/samsung/a2corelte/recovery/root/vendor/bin/hw/android.hardware.keymaster@3.0-service \
+    device/samsung/a2corelte/recovery/root/vendor/bin/hw/android.hardware.gatekeeper@1.0-service \
+    device/samsung/a2corelte/recovery/root/vendor/lib/libMcClient.so \
+    device/samsung/a2corelte/recovery/root/vendor/lib/libuuid.so \
+    device/samsung/a2corelte/recovery/root/vendor/lib/libkeymaster_messages.so \
+    device/samsung/a2corelte/recovery/root/vendor/lib/hw/keystore.exynos7870.so \
+    device/samsung/a2corelte/recovery/root/vendor/lib/hw/gatekeeper.exynos7870.so \
+    device/samsung/a2corelte/recovery/root/vendor/lib/hw/android.hardware.keymaster@3.0-impl.so \
+    device/samsung/a2corelte/recovery/root/vendor/lib/hw/android.hardware.gatekeeper@1.0-impl.so
+
 
 
 # Additional Libraries
