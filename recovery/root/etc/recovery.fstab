@@ -1,10 +1,10 @@
-# <src>			<mnt_point>	<type>	<mnt_flags and options>	<fs_mgr_flags>
+# <src>			<mnt_point>	<type>	<mnt_flags and options>			<fs_mgr_flags>
 /dev/block/platform/13540000.dwmmc0/by-name/EFS 	/efs        	ext4	defaults		recoveryonly
 /dev/block/platform/13540000.dwmmc0/by-name/BOOT	/boot		emmc	defaults		recoveryonly
 /dev/block/platform/13540000.dwmmc0/by-name/RECOVERY	/recovery  	emmc	defaults		recoveryonly
 /dev/block/platform/13540000.dwmmc0/by-name/CACHE	/cache      	ext4	defaults		recoveryonly
 /dev/block/platform/13540000.dwmmc0/by-name/SYSTEM	/system     	ext4	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/USERDATA	/data		f2fs	defaults	 	recoveryonly
+/dev/block/platform/13540000.dwmmc0/by-name/USERDATA	/data		f2fs	defaults		recoveryonly,fileencryption=aes-256-xts:aes-256-heh
 /dev/block/mmcblk1p1	                                 /sdcard	vfat	defaults		recoveryonly
 /dev/block/platform/13540000.dwmmc0/by-name/ODM		/odm		ext4	defaults		recoveryonly
 /dev/block/platform/13540000.dwmmc0/by-name/RADIO	/modem		emmc	defaults		recoveryonly
