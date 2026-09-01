@@ -1,3 +1,0 @@
-# sepolicy/device.te
-#type tee_device, dev_type;
-type mobicore_device, dev_type;
