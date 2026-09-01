@@ -3,7 +3,6 @@
 type recovery_exec, exec_type, file_type;
 
 # Allow property sets
-set_prop(recovery, default_prop)
 set_prop(recovery, system_radio_prop)
 
 # Allow sysfs vibrator access
