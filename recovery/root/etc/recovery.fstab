@@ -5,7 +5,6 @@
 /vendor         ext4    /dev/block/platform/13540000.dwmmc0/by-name/VENDOR
 /cache          ext4    /dev/block/platform/13540000.dwmmc0/by-name/CACHE
 /data           ext4    /dev/block/platform/13540000.dwmmc0/by-name/USERDATA     flags=encryptable=footer;length=-16384
-/metadata       ext4    /dev/block/platform/13540000.dwmmc0/by-name/METADATA     flags=display="Metadata"
 /efs            ext4    /dev/block/platform/13540000.dwmmc0/by-name/EFS
 /modem          emmc    /dev/block/platform/13540000.dwmmc0/by-name/RADIO
 /misc           emmc    /dev/block/platform/13540000.dwmmc0/by-name/MISC
