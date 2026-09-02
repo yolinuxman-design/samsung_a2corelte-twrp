@@ -1,16 +1,13 @@
-# <src>							<mnt_point>	<type>	<mnt_flags>		<fs_mgr_flags>
-/dev/block/platform/13540000.dwmmc0/by-name/EFS		/efs		ext4	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/BOOT		/boot		emmc	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/RECOVERY	/recovery	emmc	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/CACHE	/cache		ext4	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/SYSTEM	/system		ext4	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/USERDATA	/data		f2fs	defaults		recoveryonly,fileencryption=aes-256-xts:aes-256-heh
-/dev/block/platform/13540000.dwmmc0/by-name/ODM		/odm		ext4	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/RADIO	/modem		emmc	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/VENDOR	/vendor		ext4	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/MISC	/misc		emmc	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/HIDDEN	/preload	ext4	defaults		recoveryonly
-/dev/block/platform/13540000.dwmmc0/by-name/CPEFS	/cpefs		ext4	defaults		recoveryonly,nofail
-
-# Removable storage (handled by TWRP UI, keep simple)
-/dev/block/mmcblk1p1					/sdcard		vfat	defaults		recoveryonly
+# /etc/recovery.fstab for a2corelte
+/boot           emmc    /dev/block/platform/13540000.dwmmc0/by-name/BOOT
+/recovery       emmc    /dev/block/platform/13540000.dwmmc0/by-name/RECOVERY
+/system         ext4    /dev/block/platform/13540000.dwmmc0/by-name/SYSTEM
+/vendor         ext4    /dev/block/platform/13540000.dwmmc0/by-name/VENDOR
+/cache          ext4    /dev/block/platform/13540000.dwmmc0/by-name/CACHE
+/data           ext4    /dev/block/platform/13540000.dwmmc0/by-name/USERDATA     flags=encryptable=footer;length=-16384
+/metadata       ext4    /dev/block/platform/13540000.dwmmc0/by-name/METADATA     flags=display="Metadata"
+/efs            ext4    /dev/block/platform/13540000.dwmmc0/by-name/EFS
+/modem          emmc    /dev/block/platform/13540000.dwmmc0/by-name/RADIO
+/misc           emmc    /dev/block/platform/13540000.dwmmc0/by-name/MISC
+/external_sd    auto    /dev/block/mmcblk1p1    /dev/block/mmcblk1    flags=display="Micro SD";storage;wipeingui;removable
+/usb-otg        auto    /dev/block/sda1         /dev/block/sda        flags=display="USB-OTG";storage;wipeingui;removable
