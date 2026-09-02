@@ -2,40 +2,32 @@
 
 type recovery_exec, exec_type, file_type;
 
-# Basic property sets
 set_prop(recovery, system_radio_prop)
 
-# Vibrator
 allow recovery sysfs_vibrator:file { getattr open read write };
 
-# FIFOs
 allow recovery tmpfs:fifo_file { create read write unlink };
 allow recovery rootfs:fifo_file unlink;
 
-# Execute vendor binaries in recovery
 allow recovery vendor_file:file { read execute getattr };
 allow recovery vendor_file:dir { read open search getattr };
 
-# Access TEE / MobiCore device for keymaster/gatekeeper
+# tee_device is in public policy — this line is safe
 allow recovery tee_device:chr_file { open read write ioctl getattr };
-allow recovery mobicore_device:chr_file { open read write ioctl getattr };
 
-# Access block devices for mounting
+# REMOVE these three lines:
+# allow recovery mobicore_device:chr_file { open read write ioctl getattr };
+# allow recovery metadata_block_device:blk_file { read write open getattr };
+# allow recovery userdata_block_device:blk_file { read write open getattr ioctl };
+
 allow recovery block_device:dir { read open search getattr };
 allow recovery block_device:lnk_file { read getattr };
 
-# FBE / metadata
-allow recovery metadata_block_device:blk_file { read write open getattr };
-allow recovery userdata_block_device:blk_file { read write open getattr ioctl };
-
-# Allow loading modules (if you use insmod for crc32)
 allow recovery kernel:system module_request;
 allow recovery self:capability sys_module;
 
-# For TWRP to access /data/media paths
 allow recovery media_rw_data_file:dir { read write search open add_name create };
 allow recovery media_rw_data_file:file { read write create open getattr };
 
-# MTP / USB
 allow recovery usb_device:chr_file { read write open getattr ioctl };
 allow recovery mtp_device:chr_file { read write open getattr ioctl };
