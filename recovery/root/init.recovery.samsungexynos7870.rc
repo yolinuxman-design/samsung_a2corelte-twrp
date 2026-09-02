@@ -1,30 +1,85 @@
-on init
+# init.recovery.samsungexynos7870.rc
+# Samsung Exynos 7870 (TWRP Recovery)
+
+on early-init
+    # Disable hung task warnings during recovery
     write /proc/sys/kernel/hung_task_timeout_secs 0
-    # Set library path so vendor HALs can find their dependencies
-    export LD_LIBRARY_PATH /vendor/lib:/system/lib
+    # Keep dirty pages from blocking I/O
+    write /proc/sys/vm/dirty_ratio 5
+
+on init
+    # Library search path for vendor HALs and prebuilt blobs
+    export LD_LIBRARY_PATH /vendor/lib:/system/lib:/sbin
+
+    # Create mountpoints
+    mkdir /metadata 0771 root root
+    mkdir /efs 0771 root root
+    mkdir /vendor 0771 root root
+
+    # Samsung-specific: ensure TEE device nodes exist with correct perms
+    chmod 0666 /dev/mobicore
+    chown system system /dev/mobicore
+
+on early-fs
+    # Start vold early so it can assist with metadata/crypto mounting
+    start vold
 
 on fs
-    mount none /system/vendor /vendor bind
+    # Mount vendor partition (if separate) or bind-mount vendor into /vendor
+    # For a2corelte, vendor is usually inside system on Android 8.1 Go,
+    # but we still need /vendor populated for HALs.
+    mount none /system/vendor /vendor bind rec
+
+    # Mount metadata partition (REQUIRED for FBE on Samsung)
+    # Adjust the block path to match your actual eMMC controller:
+    # Check with: ls -la /dev/block/platform/ in a shell
+    mount ext4 /dev/block/platform/13540000.dwmmc0/by-name/METADATA /metadata \
+        noatime,nosuid,nodev,discard
+    restorecon -R /metadata
+
+    # Mount EFS (contains Samsung encryption keys / DAK)
+    mount ext4 /dev/block/platform/13540000.dwmmc0/by-name/EFS /efs \
+        noatime,nosuid,nodev,noauto_da_alloc
+    restorecon -R /efs
+
+on late-fs
+    # Ensure hwservicemanager is up before keymaster starts
+    exec_start wait_for_hwservicemanager
 
 on boot
     chmod 0660 /dev/input/event*
     chown system system /dev/input/event*
     chmod 0666 /dev/graphics/fb0
 
-    # Load crc32 module if you included it as a prebuilt module (only if kernel was not rebuilt)
-    # insmod /lib/modules/crc32.ko
-    # insmod /lib/modules/crc32c.ko
-
+    # Start core infrastructure
     start servicemanager
     start hwservicemanager
+
+    # Small delay to let hwservicemanager register
+    exec_background /sbin/sleep 0.5
+
+    # Start Samsung keymaster & gatekeeper for FBE decryption
     start keymaster-3-0
     start gatekeeper-1-0
 
+    # Start cryptfshw if you have it (optional, helps some Samsung devices)
+    # start cryptfshw
+
 on post-fs-data
+    # Samsung DAK (Device Authentication Key) directory
     mkdir /efs/DAK 0775 system system
     restorecon -R /efs/DAK
 
-# Use /sbin/ paths for core recovery binaries
+# ---------------------------------------------------------------------------
+# Services
+# ---------------------------------------------------------------------------
+
+service vold /sbin/vold
+    class early_hal
+    user root
+    group root
+    seclabel u:r:recovery:s0
+
 service servicemanager /sbin/servicemanager
     class core
     user system
@@ -39,14 +94,31 @@ service hwservicemanager /sbin/hwservicemanager
     critical
     seclabel u:r:recovery:s0
 
-service keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service
+# Wait helper: blocks until hwservicemanager is ready
+service wait_for_hwservicemanager /sbin/sh -c "while [ ! -e /dev/hwbinder ]; do sleep 0.1; done"
     class early_hal
-    user system
-    group system drmrpc
+    user root
+    group root
+    oneshot
     seclabel u:r:recovery:s0
 
+# Samsung Keymaster 3.0 (Trustonic TEE backed)
+service keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service
+    class early_hal
+    user root
+    group root drmrpc
+    seclabel u:r:recovery:s0
+
+# Samsung Gatekeeper 1.0
 service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     class early_hal
-    user system
-    group system
+    user root
+    group root
     seclabel u:r:recovery:s0
+
+# Optional: samsung a2core doesnot have
+# service cryptfshw /vendor/bin/hw/android.hardware.cryptfshw@1.0-service
+#     class early_hal
+#     user root
+#     group root
+#     seclabel u:r:recovery:s0
