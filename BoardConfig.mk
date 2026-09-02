@@ -7,6 +7,11 @@ TARGET_BOOTLOADER_BOARD_NAME := universal7870_go
 TARGET_BOARD_PLATFORM := exynos5
 TARGET_BOARD_PLATFORM_GPU := mali-t830mp2
 
+# Flags
+#TARGET_GLOBAL_CFLAGS +=
+#TARGET_GLOBAL_CPPFLAGS +=
+#COMMON_GLOBAL_CFLAGS +=
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
@@ -24,7 +29,9 @@ TARGET_2ND_CPU_VARIANT := cortex-a53
 BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
+# recovery kernel
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --board SRPSB21A012KU
+
 
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 0x002000000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x002600000
@@ -36,15 +43,16 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_PREBUILT_KERNEL := device/samsung/a2corelte/prebuilt/Image
 TARGET_PREBUILT_DTB := device/samsung/a2corelte/prebuilt/dtb.img
 
+# Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/a2corelte/bootimg.mk
+BOARD_CUSTOM_BOOTIMG_MK :=  device/samsung/a2corelte/bootimg.mk
 
 PLATFORM_VERSION := 8.1.0
-PLATFORM_SECURITY_PATCH := 2069-04-20
+PLATFORM_SECURITY_PATCH := 2069-10-01
 
 # Extras
 TARGET_SYSTEM_PROP += device/samsung/a2corelte/system.prop
@@ -53,6 +61,7 @@ TW_INCLUDE_RESETPROP := true
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
 RECOVERY_SDCARD_ON_DATA := true
+#BOARD_HAS_NO_REAL_SDCARD := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/13600000.usb/13600000.dwc3/gadget/lun%d/file"
 TW_BRIGHTNESS_PATH := "/sys/devices/14800000.dsim/backlight/panel/brightness"
 TW_MAX_BRIGHTNESS := 255
@@ -71,53 +80,19 @@ TARGET_USES_USB_CONFIGFS := true
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 
 # Encryption support
-TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_CRYPTO_FBE := true
-TW_INCLUDE_FBE := true
+#TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_SAMSUNG := true
+#TARGET_HW_DISK_ENCRYPTION := true
 
-# Metadata partition (required for FBE)
-BOARD_USES_METADATA_PARTITION := true
-
-# Samsung Exynos specific
-BOARD_USES_MULTIPLE_DTBO := false
-TARGET_USES_ION := true
-
-# TWRP specific for Samsung
-TW_INCLUDE_NTFS_3G := true
-
-# Only list modules that the TWRP build system can actually compile.
-# libMcClient and libuuid are proprietary/prebuilt blobs — do NOT list them here.
-# They are already included via recovery/root/vendor/lib/ and will be packed automatically.
-TARGET_RECOVERY_DEVICE_MODULES += \
-    android.hardware.keymaster@3.0-service \
-    android.hardware.gatekeeper@1.0-service \
-    vold \
-    vdc
-
-# Relink prebuilt executables and libraries into recovery ramdisk.
-# These are COPY operations, not build operations, so prebuilt .so files are fine here.
-TW_RECOVERY_ADDITIONAL_RELINK_FILES += \
-    device/samsung/a2corelte/recovery/root/vendor/bin/hw/android.hardware.keymaster@3.0-service \
-    device/samsung/a2corelte/recovery/root/vendor/bin/hw/android.hardware.gatekeeper@1.0-service \
-    device/samsung/a2corelte/recovery/root/vendor/lib/libMcClient.so \
-    device/samsung/a2corelte/recovery/root/vendor/lib/libuuid.so \
-    device/samsung/a2corelte/recovery/root/vendor/lib/libkeymaster_messages.so \
-    device/samsung/a2corelte/recovery/root/vendor/lib/hw/keystore.exynos7870.so \
-    device/samsung/a2corelte/recovery/root/vendor/lib/hw/gatekeeper.exynos7870.so \
-    device/samsung/a2corelte/recovery/root/vendor/lib/hw/android.hardware.keymaster@3.0-impl.so \
-    device/samsung/a2corelte/recovery/root/vendor/lib/hw/android.hardware.gatekeeper@1.0-impl.so
+# Additional Libraries
+#RECOVERY_LIBRARY_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libicui18n.so
 
 # Debug flags
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 
+
 # SELinux Policies
 # BOARD_SEPOLICY_DIRS := device/samsung/a2corelte/sepolicy
 
-
-
-#some fixes
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-TARGET_COPY_OUT_VENDOR := vendor
-TW_NO_LEGACY_PROPS := true
-TW_EXCLUDE_TWRPAPP := true
+# LZMA_RAMDISK_TARGETS := recovery
