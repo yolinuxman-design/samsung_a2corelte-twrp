@@ -90,7 +90,9 @@ TW_INCLUDE_NTFS_3G := true
 # They are already included via recovery/root/vendor/lib/ and will be packed automatically.
 TARGET_RECOVERY_DEVICE_MODULES += \
     android.hardware.keymaster@3.0-service \
-    android.hardware.gatekeeper@1.0-service
+    android.hardware.gatekeeper@1.0-service \
+    vold \
+    vdc
 
 # Relink prebuilt executables and libraries into recovery ramdisk.
 # These are COPY operations, not build operations, so prebuilt .so files are fine here.
