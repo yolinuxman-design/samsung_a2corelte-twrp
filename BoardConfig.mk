@@ -113,3 +113,11 @@ TARGET_USES_LOGD := true
 
 # SELinux Policies
 BOARD_SEPOLICY_DIRS := device/samsung/a2corelte/sepolicy
+
+
+
+#some fixes
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+TW_NO_LEGACY_PROPS := true
+TW_EXCLUDE_TWRPAPP := true
