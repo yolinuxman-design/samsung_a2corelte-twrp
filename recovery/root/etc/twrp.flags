@@ -1,0 +1,2 @@
+/data   ext4   /dev/block/platform/13540000.dwmmc0/by-name/USERDATA   flags=encryptable=footer;length=-16384
+/metadata ext4 /dev/block/platform/13540000.dwmmc0/by-name/METADATA   flags=backup=1;display="Metadata"
