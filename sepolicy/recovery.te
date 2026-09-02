@@ -15,7 +15,7 @@ allow recovery vendor_file:dir { read open search getattr };
 # tee_device is in public policy — this line is safe
 allow recovery tee_device:chr_file { open read write ioctl getattr };
 
-# REMOVE these three lines:
+
 # allow recovery mobicore_device:chr_file { open read write ioctl getattr };
 # allow recovery metadata_block_device:blk_file { read write open getattr };
 # allow recovery userdata_block_device:blk_file { read write open getattr ioctl };
