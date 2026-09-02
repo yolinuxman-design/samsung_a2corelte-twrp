@@ -1,3 +1,4 @@
-type mobicore_device, dev_type;
-type metadata_block_device, dev_type;
-type userdata_block_device, dev_type;
+# sepolicy/device.te
+# NOTE: mobicore_device, metadata_block_device, and userdata_block_device
+# are already declared in the base system sepolicy.
+# DO NOT re-declare them here or checkpolicy will fail with "Duplicate declaration".
