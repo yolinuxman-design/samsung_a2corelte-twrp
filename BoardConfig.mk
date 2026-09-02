@@ -75,6 +75,9 @@ TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE := true
 
+# Metadata partition (required for FBE)
+BOARD_USES_METADATA_PARTITION := true
+
 # Samsung Exynos specific
 BOARD_USES_MULTIPLE_DTBO := false
 TARGET_USES_ION := true
