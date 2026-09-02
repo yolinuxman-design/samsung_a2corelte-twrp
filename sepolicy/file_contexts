@@ -1,4 +1,0 @@
-
-# /dev/mobicore    u:object_r:mobicore_device:s0
-# /dev/block/platform/[^/]+/by-name/metadata    u:object_r:metadata_block_device:s0
-# /dev/block/platform/[^/]+/by-name/userdata    u:object_r:userdata_block_device:s0
