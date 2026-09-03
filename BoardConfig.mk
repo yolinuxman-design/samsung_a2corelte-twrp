@@ -76,6 +76,18 @@ TW_EXCLUDE_SUPERSU := true
 # USB configfs support for modern MTP
 TARGET_USES_USB_CONFIGFS := true
 
+
+# Force TWRP to bind to the exact touchscreen node
+BOARD_RECOVERY_TOUCHSCREEN := /dev/input/event9
+
+# Alternatively, enable automatic scanning across all input nodes
+TW_INPUT_BLACKLIST := "meta_event"
+
+# Touchscreen Calibration & Flags for Samsung Synaptics
+RECOVERY_TOUCHSCREEN_FLIP_X := false
+RECOVERY_TOUCHSCREEN_FLIP_Y := false
+
+
 # Color fix
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 
