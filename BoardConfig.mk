@@ -52,7 +52,7 @@ BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
 BOARD_CUSTOM_BOOTIMG_MK :=  device/samsung/a2corelte/bootimg.mk
 
 PLATFORM_VERSION := 8.1.0
-PLATFORM_SECURITY_PATCH := 2069-10-01
+PLATFORM_SECURITY_PATCH := 2021-10-01
 
 # Extras
 TARGET_SYSTEM_PROP += device/samsung/a2corelte/system.prop
@@ -80,22 +80,9 @@ TARGET_USES_USB_CONFIGFS := true
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 
 # Encryption support
-TW_INCLUDE_CRYPTO := true
+#TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_SAMSUNG := true
 #TARGET_HW_DISK_ENCRYPTION := true
-
-
-# FDE specific (A2 Core uses Full Disk Encryption, not FBE)
-TW_CRYPTO_FS_TYPE := "ext4"
-TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p26"
-TW_CRYPTO_MNT_POINT := "/data"
-TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,discard,noauto_da_alloc,barrier=1"
-TW_CRYPTO_FS_FLAGS := "0x00000406"
-TW_CRYPTO_KEY_LOC := "footer"
-
-# Do NOT enable FBE unless you confirmed the device uses it
-# TW_INCLUDE_FBE := false
-
 
 # Additional Libraries
 #RECOVERY_LIBRARY_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libicui18n.so
