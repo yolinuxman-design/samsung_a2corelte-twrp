@@ -51,6 +51,13 @@ on boot
     chown system system /dev/input/event*
     chmod 0666 /dev/graphics/fb0
 
+    # Attempt to wake synaptics TD4X01 by toggling FB blank
+    write /sys/class/graphics/fb0/blank 1
+    sleep 0.1
+    write /sys/class/graphics/fb0/blank 0
+    sleep 0.1
+
+
     # Start core infrastructure
     start servicemanager
     start hwservicemanager
@@ -69,6 +76,10 @@ on post-fs-data
     # Samsung DAK (Device Authentication Key) directory
     mkdir /efs/DAK 0775 system system
     restorecon -R /efs/DAK
+
+
+
+
 
 # ---------------------------------------------------------------------------
 # Services
