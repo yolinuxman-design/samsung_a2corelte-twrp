@@ -108,3 +108,9 @@ TARGET_USES_LOGD := true
 # BOARD_SEPOLICY_DIRS := device/samsung/a2corelte/sepolicy
 
 # LZMA_RAMDISK_TARGETS := recovery
+
+
+#Credit
+TW_MAINTAINER := Rabi Rauniyar
+TW_DEVICE_VERSION := -v1.0
+RECOVERY_VARIANT := TWRP
