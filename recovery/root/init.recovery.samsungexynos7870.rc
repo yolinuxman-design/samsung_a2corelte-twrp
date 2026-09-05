@@ -1,5 +1,6 @@
 # init.recovery.samsungexynos7870.rc
-# Samsung Exynos 7870 (TWRP Recovery) — Failing HALs disabled
+# Samsung Exynos 7870 (TWRP Recovery)
+# Samsung security disabled + permissive SELinux
 
 on early-init
     write /proc/sys/kernel/hung_task_timeout_secs 0
@@ -37,12 +38,9 @@ on boot
     start servicemanager
     start hwservicemanager
 
-    exec_background /sbin/sleep 0.5
-
-    # Disabled — binaries missing in recovery ramdisk
+    # Disabled: Samsung security off, permissive SELinux
     # start keymaster-3-0
     # start gatekeeper-1-0
-
     # start cryptfshw
 
 on post-fs-data
@@ -74,14 +72,7 @@ service hwservicemanager /sbin/hwservicemanager
     critical
     seclabel u:r:recovery:s0
 
-# service wait_for_hwservicemanager /sbin/sh -c "while [ ! -e /dev/hwbinder ]; do sleep 0.1; done"
-#     class early_hal
-#     user root
-#     group root
-#     oneshot
-#     seclabel u:r:recovery:s0
-
-# Disabled — vendor binaries missing, causes crash spam
+# Disabled: vendor binaries missing / not needed with Samsung security disabled
 # service keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service
 #     class early_hal
 #     user root
