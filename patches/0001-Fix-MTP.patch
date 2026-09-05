@@ -1,0 +1,29 @@
+diff --git a/mtp/MtpServer.cpp b/mtp/MtpServer.cpp
+--- a/mtp/MtpServer.cpp
++++ b/mtp/MtpServer.cpp
+@@ -800,7 +800,10 @@ void MtpServer::run() {
+ 				break;
+ 
+ 			default:
+-				ALOGE("got unsupported command UNKNOWN");
++				ALOGE("Unsupported command 0x%04X, returning NOT_SUPPORTED",
++				      request.getOperationCode());
++				response = MTP_RESPONSE_OPERATION_NOT_SUPPORTED;
+ 				break;
+ 		}
+ 	}
+@@ -950,8 +953,13 @@ void MtpServer::beginSendObject() {
+ 
+ void MtpServer::endSendObject() {
+ 	if (mSendObject) {
+-		ALOGE("endSendObject() failed, unlinking %s", mSendObject->getPath());
+-		unlink(mSendObject->getPath());
++		ALOGE("endSendObject() cleaning up %s", mSendObject->getPath());
++		// Only unlink empty files (failed/cancelled transfers)
++		struct stat st;
++		if (stat(mSendObject->getPath(), &st) == 0 && st.st_size == 0) {
++			unlink(mSendObject->getPath());
++		}
+ 		mSendObject->close();
+ 		delete mSendObject;
+ 		mSendObject = NULL;
