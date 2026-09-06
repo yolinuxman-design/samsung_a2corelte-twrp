@@ -6,9 +6,9 @@
   <img src="https://img.shields.io/badge/Status-UNOFFICIAL-red?style=for-the-badge"/>
   <img src="https://github.com/yolinuxman-design/samsung_a2corelte-twrp/actions/workflows/recovery-build-a2core.yml/badge.svg"/>
 </p>
-
+---
 **Unofficial TWRP 3.7.0 device tree for the Samsung Galaxy A2 Core (a2corelte).**
-
+---
 This repository contains the device tree used to build **Team Win Recovery Project (TWRP) 3.7.0** for the **Samsung Galaxy A2 Core** running **Android 8.1 Oreo**.
 ---
 > **Disclaimer**
