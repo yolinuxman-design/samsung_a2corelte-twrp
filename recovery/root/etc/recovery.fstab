@@ -8,5 +8,5 @@
 /efs            ext4    /dev/block/platform/13540000.dwmmc0/by-name/EFS
 /modem          emmc    /dev/block/platform/13540000.dwmmc0/by-name/RADIO
 /misc           emmc    /dev/block/platform/13540000.dwmmc0/by-name/MISC
-/external_sd    auto    /dev/block/mmcblk1p1    /dev/block/mmcblk1    flags=display="Micro SD";storage;wipeingui;removable
+/external_sd    auto    /dev/block/mmcblk2p1  /dev/block/mmcblk2   flags=display="Micro SD";storage;wipeingui;removable
 /usb-otg        auto    /dev/block/sda1         /dev/block/sda        flags=display="USB-OTG";storage;wipeingui;removable
