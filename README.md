@@ -140,7 +140,7 @@ If you discover additional issues, please report them with recovery logs.
 
 - **Rabi (@s66_36_29)** — Device Tree Maintainer & TWRP Porter  
   GitHub: https://github.com/yolinuxman-design
-- **Faisal Ahamed (@faisalahamed01)** — Testing
+- **Faisal Ahamed (@faisalahamed01)** — Testing and for patched `boot.img`
 - **Team Win Recovery Project (TWRP)**
 - **OmniROM**
 - **Samsung Open Source Release Center**
