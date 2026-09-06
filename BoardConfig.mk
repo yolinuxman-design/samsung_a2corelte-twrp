@@ -70,11 +70,11 @@ TW_NO_REBOOT_BOOTLOADER := true
 TW_HAS_DOWNLOAD_MODE := true
 TW_USE_NEW_MINADBD := true
 TW_USE_TOOLBOX := true
-TW_MTP_DEVICE := "/dev/usb_mtp_gadget"
 TW_EXCLUDE_SUPERSU := true
 
 # USB configfs support for modern MTP
-TARGET_USES_USB_CONFIGFS := true
+# TARGET_USES_USB_CONFIGFS := true
+TW_MTP_DEVICE := "/dev/usb_mtp_gadget"
 
 
 # Force TWRP to bind to the exact touchscreen node
