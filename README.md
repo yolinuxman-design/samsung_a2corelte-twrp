@@ -1,4 +1,3 @@
-
 # Samsung Galaxy A2 Core (a2corelte) – TWRP Device Tree
 
 <p align="center">
@@ -29,17 +28,78 @@ This repository contains the device tree used to build **Team Win Recovery Proje
 ## 📥 Downloads
 
 - **Recovery:** [Telegram Release](https://t.me/a2corelte_discussion/1757)
-- **Flashing Guide:** [Telegram Guide](https://t.me/a2corelte_discussion/1940)
+- **Encryption Fix (Patched boot.img):** https://t.me/a2corelte_discussion/2020
+
+---
+
+## 🛠 TWRP Flashing Guide
+
+### 📋 Requirements
+
+- Unlocked bootloader
+- PC/Laptop or another Android phone
+- A little hustle & brain 🧠
+
+---
+
+### 1️⃣ Unlock the Bootloader
+
+Unlock the bootloader before proceeding.
+
+> Follow Samsung bootloader unlocking instructions or a trusted online guide for your device.
+
+---
+
+### 2️⃣ Flash the Patched `boot.img`
+
+Flash the **patched `boot.img`** with **`#disable_force_encryption`**.
+
+📥 **Download:** https://t.me/a2corelte_discussion/2020
+
+> ⚠️ **Warning:** This will factory reset your device.
+
+**Back up your data before continuing.**
+
+---
+
+### 3️⃣ Disable Encryption
+
+Boot into Android and navigate to:
+
+> **Settings → Lock screen & security → Encrypt Phone**
+
+Select **"Do not require"** and confirm.
+
+---
+
+### 4️⃣ Enable Developer Options
+
+Enable **Developer Options**, then make sure these options are enabled:
+
+- OEM Unlocking
+- USB Debugging
+
+---
+
+### 5️⃣ Flash TWRP
+
+1. Boot into **Download Mode**.
+2. Open **Odin**.
+3. Select **`TWRP.tar`** in the **AP** slot.
+4. Click **Start** to flash.
+5. Boot directly into **Recovery** after flashing.
+
+🎉 **Done!**
 
 ---
 
 ## ✅ Working Features
 
-- [x] Data Decryption
-- [x] Touchscreen
-- [x] Flashing ZIPs and Images
-- [x] ADB Support
-- [x] General Recovery Functionality
+- Data Decryption 🔓
+- Touchscreen 🖐️
+- Flashing ZIPs and Images
+- ADB Support
+- General Recovery Functionality
 
 ---
 
@@ -54,19 +114,6 @@ If you discover additional issues, please report them with recovery logs.
 
 ---
 
-## 🔧 Flashing Instructions
-
-> **Flash at your own risk.**
-
-1. Boot the device into **Download Mode**.
-2. Open **Odin** on your PC.
-3. Load `TWRP.tar` into the **AP** slot.
-4. Flash the recovery.
-5. **Immediately boot into Recovery** after flashing.
-6. Follow the complete flashing guide before installing custom software.
-
----
-
 ## 📝 Changelog
 
 ### TWRP 3.7.0 (Android 8.1)
@@ -78,7 +125,7 @@ If you discover additional issues, please report them with recovery logs.
 
 ---
 
-## 🛠️ Build Information
+## 🛠 Build Information
 
 | Component | Value |
 |-----------|-------|
@@ -104,4 +151,3 @@ If you discover additional issues, please report them with recovery logs.
 <p align="center">
   Made with ❤️ by <b>Rabi (yolinuxman-design)</b> for the Samsung Galaxy A2 Core community.
 </p>
-
