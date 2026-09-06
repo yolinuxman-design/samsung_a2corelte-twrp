@@ -52,7 +52,7 @@ Unlock the bootloader before proceeding.
 
 ### 2️⃣ Flash the Patched `boot.img`
 
-Flash the **patched `boot.img`** with **`#disable_force_encryption`**.
+Flash the **patched `boot.img`**.
 
 📥 **Download:** https://t.me/a2corelte_discussion/2020
 
