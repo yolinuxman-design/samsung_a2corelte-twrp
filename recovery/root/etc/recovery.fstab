@@ -1,11 +1,10 @@
-# /etc/recovery.fstab for a2corelte
-/boot           emmc    /dev/block/platform/13540000.dwmmc0/by-name/BOOT
-/recovery       emmc    /dev/block/platform/13540000.dwmmc0/by-name/RECOVERY
-/system         ext4    /dev/block/platform/13540000.dwmmc0/by-name/SYSTEM
-/vendor         ext4    /dev/block/platform/13540000.dwmmc0/by-name/VENDOR
-/cache          ext4    /dev/block/platform/13540000.dwmmc0/by-name/CACHE
-/data           ext4    /dev/block/platform/13540000.dwmmc0/by-name/USERDATA     flags=encryptable=footer;length=-16384
-/efs            ext4    /dev/block/platform/13540000.dwmmc0/by-name/EFS
+/boot           emmc    /dev/block/platform/13540000.dwmmc0/by-name/BOOT         flags=flashimg=1
+/recovery       emmc    /dev/block/platform/13540000.dwmmc0/by-name/RECOVERY     flags=flashimg=1
+/system         ext4    /dev/block/platform/13540000.dwmmc0/by-name/SYSTEM        flags=flashimg=1
+/vendor         ext4    /dev/block/platform/13540000.dwmmc0/by-name/VENDOR        flags=flashimg=1
+/cache          ext4    /dev/block/platform/13540000.dwmmc0/by-name/CACHE        
+/data           ext4    /dev/block/platform/13540000.dwmmc0/by-name/USERDATA      flags=encryptable=footer;length=-16384
+/efs            ext4    /dev/block/platform/13540000.dwmmc0/by-name/EFS           flags=flashimg=1
 /modem          emmc    /dev/block/platform/13540000.dwmmc0/by-name/RADIO
 /misc           emmc    /dev/block/platform/13540000.dwmmc0/by-name/MISC
 /external_sd    auto    /dev/block/mmcblk2p1  /dev/block/mmcblk2   flags=display="Micro SD";storage;wipeingui;removable
