@@ -1,5 +1,5 @@
 
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_a2corelte.mk
+    $(LOCAL_DIR)/pb_a2corelte.mk
 
