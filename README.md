@@ -38,8 +38,8 @@ This repository contains the device tree used to build **Team Win Recovery Proje
 
 ## 📥 Downloads
 
-- **Recovery:** [Telegram Release](https://t.me/a2corelte_discussion/1757)
-- **Encryption Fix (Patched boot.img):** https://t.me/a2corelte_discussion/2020
+- **Recovery:** [Telegram Release](https://github.com/yolinuxman-design/samsung_a2corelte-twrp/releases)
+- **Encryption Fix [Patched boot.img](https://github.com/yolinuxman-design/samsung_a2corelte-twrp/releases/download/34043024593/boot_patched.tar)
 
 ---
 
@@ -65,7 +65,7 @@ Unlock the bootloader before proceeding.
 
 Flash the **patched `boot.img`**.
 
-📥 **Download:** https://t.me/a2corelte_discussion/2020
+📥 **Download:** [Patched boot.img](https://github.com/yolinuxman-design/samsung_a2corelte-twrp/releases/download/34043024593/boot_patched.tar)
 
 > ⚠️ **Warning:** This will factory reset your device.
 
