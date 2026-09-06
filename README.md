@@ -1,6 +1,4 @@
-Markdown
 
-```
 # Samsung Galaxy A2 Core (a2corelte) – TWRP Device Tree
 
 <p align="center">
@@ -106,4 +104,4 @@ If you discover additional issues, please report them with recovery logs.
 <p align="center">
   Made with ❤️ by <b>Rabi (yolinuxman-design)</b> for the Samsung Galaxy A2 Core community.
 </p>
-```
+
