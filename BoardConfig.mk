@@ -110,7 +110,7 @@ TARGET_USES_LOGD := true
 # LZMA_RAMDISK_TARGETS := recovery
 
 
-#Credit
-TW_MAINTAINER := Rabi Rauniyar
-TW_DEVICE_VERSION := 2.0
-RECOVERY_VARIANT := TWRP
+# PBRP specific build flags
+PB_TORCH_PATH := "/sys/class/leds/led:torch_0"
+PB_DISABLE_DEFAULT_DM_VERITY := true
+
