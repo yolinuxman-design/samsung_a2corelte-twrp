@@ -38,8 +38,8 @@ This repository contains the device tree used to build **Team Win Recovery Proje
 
 ## 📥 Downloads
 
-- **Recovery:** [Telegram Release](https://github.com/yolinuxman-design/samsung_a2corelte-twrp/releases)
-- **Encryption Fix [Patched boot.img](https://github.com/yolinuxman-design/samsung_a2corelte-twrp/releases/download/34043024593/boot_patched.tar)
+- **Recovery:** [TWRP Release](https://github.com/yolinuxman-design/samsung_a2corelte-twrp/releases)
+- **Encryption Fix:** [Patched boot.img](https://github.com/yolinuxman-design/samsung_a2corelte-twrp/releases/download/34043024593/boot_patched.tar)
 
 ---
 
