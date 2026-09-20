@@ -1,11 +1,13 @@
 /boot           emmc    /dev/block/platform/13540000.dwmmc0/by-name/BOOT         flags=flashimg=1
 /recovery       emmc    /dev/block/platform/13540000.dwmmc0/by-name/RECOVERY     flags=flashimg=1
-/system         ext4    /dev/block/platform/13540000.dwmmc0/by-name/SYSTEM        flags=flashimg=1
-/vendor         ext4    /dev/block/platform/13540000.dwmmc0/by-name/VENDOR        flags=flashimg=1
+/system         ext4    /dev/block/platform/13540000.dwmmc0/by-name/SYSTEM        
+/system_image   emmc    /dev/block/platform/13540000.dwmmc0/by-name/SYSTEM         flags=backup=1;flashimg=1;display="System Image"
+/vendor         ext4    /dev/block/platform/13540000.dwmmc0/by-name/VENDOR        
+/vendor_image   emmc    /dev/block/platform/13540000.dwmmc0/by-name/VENDOR         flags=backup=1;flashimg=1;display="Vendor Image"
 /cache          ext4    /dev/block/platform/13540000.dwmmc0/by-name/CACHE        
 /data           ext4    /dev/block/platform/13540000.dwmmc0/by-name/USERDATA      flags=encryptable=footer;length=-16384
 /efs            ext4    /dev/block/platform/13540000.dwmmc0/by-name/EFS           flags=flashimg=1
 /modem          emmc    /dev/block/platform/13540000.dwmmc0/by-name/RADIO
 /misc           emmc    /dev/block/platform/13540000.dwmmc0/by-name/MISC
-/external_sd    auto    /dev/block/mmcblk2p1  /dev/block/mmcblk2   flags=display="Micro SD";storage;wipeingui;removable
+/external_sd    auto    /dev/block/mmcblk1p1  /dev/block/mmcblk1   flags=display="Micro SD";storage;wipeingui;removable
 /usb-otg        auto    /dev/block/sda1         /dev/block/sda        flags=display="USB-OTG";storage;wipeingui;removable
