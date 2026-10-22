@@ -16,3 +16,6 @@ PRODUCT_NAME := omni_a2corelte
 PRODUCT_MODEL := Galaxy A2 Core (2019)
 PRODUCT_BRAND := samsung
 PRODUCT_MANUFACTURER := samsung
+
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    persist.sys.usb.config=mtp
