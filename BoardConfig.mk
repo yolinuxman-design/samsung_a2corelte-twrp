@@ -118,7 +118,7 @@ OF_SCREEN_H := 960
 OF_STATUS_H := 60
 # Bypass asset generation checks for older branches
 TW_EXCLUDE_DEFAULT_USB_INIT := true
-OF_MAINTAINER := "Rabi Rauniyar"
+OF_MAINTAINER := Rabi Rauniyar
 
 # Force OrangeFox fallback engines
 OF_DISABLE_MIUI_SPECIFIC_FEATURES := 1
