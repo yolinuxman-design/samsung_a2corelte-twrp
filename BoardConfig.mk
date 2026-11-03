@@ -112,8 +112,8 @@ TARGET_USES_LOGD := true
 #Credit
 TW_MAINTAINER := Rabi Rauniyar
 TW_DEVICE_VERSION := 2.0
-RECOVERY_VARIANT := TWRP
-
+# OrangeFox
+     OF_DEFAULT_KEYMASTER_VERSION := 3.0
 
 # Storage & MTP configuration flags
 TW_INCLUDE_MTP := true
