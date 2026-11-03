@@ -6,7 +6,7 @@ on:
 env:
   MANIFEST_BRANCH: fox_9.0
   DEVICE_TREE: https://github.com/yolinuxman-design/samsung_a2corelte-twrp.git
-  DEVICE_TREE_BRANCH: main
+  DEVICE_TREE_BRANCH: fox_9.0
   DEVICE_PATH: device/samsung/a2corelte
   DEVICE_NAME: a2corelte
 
