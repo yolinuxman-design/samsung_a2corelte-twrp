@@ -18,7 +18,7 @@ on:
       DEVICE_TREE_BRANCH:
         description: 'Device Tree Branch'
         required: true
-        default: 'main'
+        default: 'fox_9.0'
       DEVICE_PATH:
         description: 'Device Path inside source'
         required: true
@@ -99,11 +99,15 @@ jobs:
         cat > .repo/local_manifests/fix-rotted-repos.xml <<'EOF'
         <?xml version="1.0" encoding="UTF-8"?>
         <manifest>
-          <!-- omnirom deleted android-9.0 on these two repos -> use AOSP Pie tag instead -->
+          <remote name="lineage" fetch="https://github.com/LineageOS" />
+          <!-- omnirom deleted android-9.0 on these two repos.
+               frameworks/base: AOSP Pie tag is fine (not compiled into recovery).
+               system/core: MUST be lineage-16.0 - AOSP Pie's mkbootimg dropped --dt,
+               and this device's bootimg.mk requires --dt $(TARGET_PREBUILT_DTB). -->
           <remove-project name="android_frameworks_base" />
           <remove-project name="android_system_core" />
           <project path="frameworks/base" name="platform/frameworks/base" remote="aosp" revision="refs/tags/android-9.0.0_r47" />
-          <project path="system/core" name="platform/system/core" remote="aosp" revision="refs/tags/android-9.0.0_r47" />
+          <project path="system/core" name="android_system_core" remote="lineage" revision="lineage-16.0" />
           <!-- OrangeFox deleted vendor/recovery 'master'; 'legacy' is its preserved continuation -->
           <remove-project name="vendor/recovery" />
           <project path="vendor/recovery" name="vendor/recovery" remote="fox" revision="legacy" />
@@ -155,6 +159,7 @@ jobs:
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/OrangeFox*.img
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/OrangeFox*.zip
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.tar
         name: OrangeFox-${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: |
