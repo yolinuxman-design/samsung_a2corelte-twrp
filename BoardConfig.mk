@@ -59,7 +59,7 @@ TARGET_SYSTEM_PROP += device/samsung/a2corelte/system.prop
 TW_INCLUDE_RESETPROP := true
 
 # TWRP specific build flags
-TW_THEME := portrait_hdpi
+TW_THEME := portrait_mdpi
 RECOVERY_SDCARD_ON_DATA := true
 #BOARD_HAS_NO_REAL_SDCARD := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/13600000.usb/13600000.dwc3/gadget/lun%d/file"
@@ -114,6 +114,16 @@ TW_MAINTAINER := Rabi Rauniyar
 TW_DEVICE_VERSION := 2.0
 # OrangeFox
      OF_DEFAULT_KEYMASTER_VERSION := 3.0
+OF_SCREEN_H := 960
+OF_STATUS_H := 60
+# Bypass asset generation checks for older branches
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+OF_MAINTAINER := "Rabi Rauniyar"
+
+# Force OrangeFox fallback engines
+OF_DISABLE_MIUI_SPECIFIC_FEATURES := 1
+OF_USE_GREEN_LED := 0
+
 
 # Storage & MTP configuration flags
 TW_INCLUDE_MTP := true
