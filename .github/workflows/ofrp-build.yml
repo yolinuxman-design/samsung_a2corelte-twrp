@@ -2,70 +2,138 @@ name: 🦊 OrangeFox 9.0 Build (a2corelte)
 
 on:
   workflow_dispatch:
-
-env:
-  MANIFEST_BRANCH: fox_9.0
-  DEVICE_TREE: https://github.com/yolinuxman-design/samsung_a2corelte-twrp.git
-  DEVICE_TREE_BRANCH: fox_9.0
-  DEVICE_PATH: device/samsung/a2corelte
-  DEVICE_NAME: a2corelte
+    inputs:
+      MANIFEST_URL:
+        description: 'OrangeFox Manifest URL'
+        required: true
+        default: 'https://gitlab.com/OrangeFox/Manifest.git'
+      MANIFEST_BRANCH:
+        description: 'Manifest Branch (fox_9.0 for A2 Core)'
+        required: true
+        default: 'fox_9.0'
+      DEVICE_TREE_URL:
+        description: 'Your Device Tree URL'
+        required: true
+        default: 'https://github.com/yolinuxman-design/samsung_a2corelte-twrp'
+      DEVICE_TREE_BRANCH:
+        description: 'Device Tree Branch'
+        required: true
+        default: 'fox_9.0'
+      DEVICE_PATH:
+        description: 'Device Path inside source'
+        required: true
+        default: 'device/samsung/a2corelte'
+      DEVICE_NAME:
+        description: 'Device Codename'
+        required: true
+        default: 'a2corelte'
+      MAKEFILE_NAME:
+        description: 'Lunch Makefile Name (fox_9.0 still uses omni_ prefix)'
+        required: true
+        default: 'omni_a2corelte'
 
 jobs:
   build:
-    name: Build OrangeFox Recovery
-    runs-on: ubuntu-22.04   # MUST be 22.04: fox_9.0 needs Python 2.7 (gone in 24.04)
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-22.04   # fox_9.0 needs Python 2.7 -> must NOT be ubuntu-latest (24.04)
+    permissions:
+      contents: write
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@v10
-        with:
-          root-reserve-mb: 1024
-          swap-size-mb: 6144
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
+    - name: Display Run Parameters
+      run: |
+        echo "::group::Build Parameters"
+        echo "Manifest URL: ${{ github.event.inputs.MANIFEST_URL }}"
+        echo "Manifest Branch: ${{ github.event.inputs.MANIFEST_BRANCH }}"
+        echo "Device Tree: ${{ github.event.inputs.DEVICE_TREE_URL }}"
+        echo "Device Tree Branch: ${{ github.event.inputs.DEVICE_TREE_BRANCH }}"
+        echo "Device Path: ${{ github.event.inputs.DEVICE_PATH }}"
+        echo "Device Name: ${{ github.event.inputs.DEVICE_NAME }}"
+        echo "Makefile: ${{ github.event.inputs.MAKEFILE_NAME }}"
+        echo "Output: OrangeFox-unofficial-${{ github.event.inputs.DEVICE_NAME }}.img"
+        echo "::endgroup::"
 
-      - name: Setup build environment
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y git-core gnupg flex bison gperf build-essential \
-            zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 \
-            libncurses5 lib32ncurses5-dev x11proto-core-dev libx11-dev \
-            lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip \
-            python2 bc cpio rsync lz4
-          sudo ln -sf /usr/bin/python2 /usr/bin/python
-          python --version   # must print Python 2.7.x
-          mkdir -p ~/bin
-          curl -s https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-          chmod a+x ~/bin/repo
-          echo "$HOME/bin" >> "$GITHUB_PATH"
-          git config --global user.name "github-actions"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global color.ui false
+    - name: Check Out
+      uses: actions/checkout@v4
 
-      - name: Sync OrangeFox sources (fox_9.0 manifest)
-        run: |
-          mkdir -p ~/fox
-          cd ~/fox
-          repo init --depth=1 -u https://gitlab.com/OrangeFox/Manifest.git -b $MANIFEST_BRANCH
-          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+    - name: Cleanup Workspace
+      uses: rokibhasansagar/slimhub_actions@main
 
-      - name: Clone device tree
-        run: git clone $DEVICE_TREE -b $DEVICE_TREE_BRANCH $DEVICE_PATH
+    - name: Prepare Build Environment
+      run: |
+        sudo apt-get update
+        DEBIAN_FRONTEND=noninteractive sudo apt-get install -yq gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev libncurses5 python2 tar
 
-      - name: Build OrangeFox
-        run: |
-          cd ~/fox
-          export FOX_BUILD_DEVICE=$DEVICE_NAME
-          export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1
-          export FOX_VANILLA_BUILD=1
-          source build/envsetup.sh
-          lunch omni_$DEVICE_NAME-eng
-          mka recoveryimage
+    - name: Install OpenJDK 11
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '11'
 
-      - name: Upload recovery image
-        uses: actions/upload-artifact@v4
-        with:
-          name: OrangeFox-9.0-a2corelte
-          path: |
-            /home/runner/fox/out/target/product/a2corelte/OrangeFox*.img
-            /home/runner/fox/out/target/product/a2corelte/recovery.*
+    - name: Switch to Python 2 (REQUIRED for fox_9.0)
+      run: |
+        sudo rm -f /usr/bin/python
+        sudo ln -s /usr/bin/python2 /usr/bin/python
+        python --version
+        python2 --version
+
+    - name: Install Repo Tool
+      run: |
+        mkdir -p ~/bin
+        curl -s https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        chmod a+x ~/bin/repo
+        sudo ln -sf ~/bin/repo /usr/local/bin/repo
+
+    - name: Initialize Repo
+      id: pwd
+      run: |
+        mkdir -p workspace
+        cd workspace
+        echo "workspace-folder=$(pwd)" >> $GITHUB_OUTPUT
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        repo init --depth=1 -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
+
+    - name: Repo Sync
+      run: |
+        repo sync -j$(nproc --all) --force-sync --no-clone-bundle
+      working-directory: workspace
+
+    - name: Clone Device Tree
+      run: |
+        git clone --depth=1 ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 12
+
+    - name: Build OrangeFox
+      run: |
+        source build/envsetup.sh
+        export FOX_BUILD_DEVICE=${{ github.event.inputs.DEVICE_NAME }}
+        export FOX_VANILLA_BUILD=1
+        export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1
+        export ALLOW_MISSING_DEPENDENCIES=true
+        export LC_ALL=C
+        lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng
+        mka recoveryimage
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Upload to Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/OrangeFox*.img
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/OrangeFox*.zip
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
+        name: OrangeFox-${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+        body: |
+          **Device:** ${{ github.event.inputs.DEVICE_NAME }}
+          **Manifest:** ${{ github.event.inputs.MANIFEST_BRANCH }}
+          **Output:** OrangeFox-unofficial-${{ github.event.inputs.DEVICE_NAME }}.img
+          **Flashing:** Odin -> AP slot (same as TWRP.tar packaging)
+          **Built by:** GitHub Actions
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
