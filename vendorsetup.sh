@@ -15,6 +15,8 @@
 #
 # OrangeFox vendorsetup for a2corelte
 export FOX_BUILD_DEVICE=a2corelte
-
+export FOX_USE_NANO_EDITOR=1
+export FOX_ENABLE_APP_MANAGER=1
+export FOX_DELETE_AROMAFM=1
+export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1
 add_lunch_combo omni_a2corelte-eng
-
