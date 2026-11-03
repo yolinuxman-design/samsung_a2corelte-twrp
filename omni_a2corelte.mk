@@ -1,3 +1,5 @@
+DEVICE_PATH := device/samsung/a2corelte
+
 # Release name
 PRODUCT_RELEASE_NAME := a2corelte
 
@@ -5,6 +7,7 @@ $(call inherit-product, build/target/product/embedded.mk)
 
 # Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
+$(call inherit-product-if-exists, $(DEVICE_PATH)/fox_$(PRODUCT_RELEASE_NAME).mk)
 
 PRODUCT_PACKAGES += \
 	charger_res_images \
