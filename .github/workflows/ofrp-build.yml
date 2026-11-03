@@ -18,7 +18,7 @@ on:
       DEVICE_TREE_BRANCH:
         description: 'Device Tree Branch'
         required: true
-        default: 'fox_9.0'
+        default: 'main'
       DEVICE_PATH:
         description: 'Device Path inside source'
         required: true
@@ -92,6 +92,24 @@ jobs:
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
         repo init --depth=1 -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
+
+    - name: Fix Rotten Manifest Repos
+      run: |
+        mkdir -p .repo/local_manifests
+        cat > .repo/local_manifests/fix-rotted-repos.xml <<'EOF'
+        <?xml version="1.0" encoding="UTF-8"?>
+        <manifest>
+          <!-- omnirom deleted android-9.0 on these two repos -> use AOSP Pie tag instead -->
+          <remove-project name="android_frameworks_base" />
+          <remove-project name="android_system_core" />
+          <project path="frameworks/base" name="platform/frameworks/base" remote="aosp" revision="refs/tags/android-9.0.0_r47" />
+          <project path="system/core" name="platform/system/core" remote="aosp" revision="refs/tags/android-9.0.0_r47" />
+          <!-- OrangeFox deleted vendor/recovery 'master'; 'legacy' is its preserved continuation -->
+          <remove-project name="vendor/recovery" />
+          <project path="vendor/recovery" name="vendor/recovery" remote="fox" revision="legacy" />
+        </manifest>
+        EOF
+      working-directory: workspace
 
     - name: Repo Sync
       run: |
