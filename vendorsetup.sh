@@ -13,5 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# OrangeFox vendorsetup for a2corelte
+export FOX_BUILD_DEVICE=a2corelte
 
 add_lunch_combo omni_a2corelte-eng
+
