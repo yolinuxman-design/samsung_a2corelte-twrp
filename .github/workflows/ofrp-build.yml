@@ -116,6 +116,16 @@ jobs:
         repo sync -j$(nproc --all) --force-sync --no-clone-bundle
       working-directory: workspace
 
+    - name: Fetch Recovery Theme (bypass dead OrangeFox submodule)
+      run: |
+        rm -rf bootable/recovery/gui/theme
+        git clone --depth=1 --single-branch --branch android-9.0 --sparse https://github.com/omnirom/android_bootable_recovery theme_tmp
+        git -C theme_tmp sparse-checkout set gui/theme
+        mv theme_tmp/gui/theme bootable/recovery/gui/theme
+        rm -rf theme_tmp
+        ls bootable/recovery/gui/theme
+      working-directory: workspace
+
     - name: Clone Device Tree
       run: |
         git clone --depth=1 ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
