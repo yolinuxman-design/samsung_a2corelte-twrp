@@ -102,13 +102,13 @@ jobs:
           <remote name="lineage" fetch="https://github.com/LineageOS" />
           <!-- omnirom deleted android-9.0 on these two repos.
                frameworks/base: AOSP Pie tag is fine (not compiled into recovery).
-               system/core: MUST be lineage-16.0 - AOSP Pie's mkbootimg dropped --dt,
-               and this device's bootimg.mk requires --dt $(TARGET_PREBUILT_DTB). -->
+               system/core: MUST be lineage-16.0. AOSP Pie mkbootimg dropped the dt flag,
+               and this device's bootimg.mk passes dt via TARGET_PREBUILT_DTB. -->
           <remove-project name="android_frameworks_base" />
           <remove-project name="android_system_core" />
           <project path="frameworks/base" name="platform/frameworks/base" remote="aosp" revision="refs/tags/android-9.0.0_r47" />
           <project path="system/core" name="android_system_core" remote="lineage" revision="lineage-16.0" />
-          <!-- OrangeFox deleted vendor/recovery 'master'; 'legacy' is its preserved continuation -->
+          <!-- OrangeFox deleted the vendor/recovery master branch; legacy is its preserved continuation -->
           <remove-project name="vendor/recovery" />
           <project path="vendor/recovery" name="vendor/recovery" remote="fox" revision="legacy" />
         </manifest>
